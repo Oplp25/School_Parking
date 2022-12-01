@@ -1,5 +1,4 @@
 # For creating and managing the user database
-
 import sqlite3
 
 
@@ -41,8 +40,3 @@ class DB:
         self.cur.execute("DELETE FROM users WHERE userID = ?",(rqUserID,))
         self.conn.commit()
         self.close()
-
-
-userDB = DB()
-
-userDB.removeUser(1)
