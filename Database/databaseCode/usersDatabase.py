@@ -4,7 +4,7 @@ import sqlite3,os
 
 class DB:
     def __init__(self):
-        self.conn = sqlite3.connect(str(os.getcwd()).replace('databaseCode','Databases')+"\\Users.db", detect_types=sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES)
+        self.conn = sqlite3.connect(os.getcwd()+r"\Database\Databases\Users.db", detect_types=sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES)
         self.cur = self.conn.cursor()
         self.cur.execute(
             """CREATE TABLE IF NOT EXISTS users
@@ -20,7 +20,7 @@ class DB:
         self.conn.commit()
 
     def open(self):
-        self.conn = sqlite3.connect(str(os.getcwd()).replace('databaseCode','Databases')+"\\Users.db", detect_types=sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES)
+        self.conn = sqlite3.connect(os.getcwd()+r"\Database\Databases\Users.db", detect_types=sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES)
         self.cur = self.conn.cursor()
 
     def close(self):
