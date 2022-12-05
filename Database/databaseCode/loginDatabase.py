@@ -32,6 +32,3 @@ class LoginDB(object):
         self.open()
         self.cur.execute('DELETE FROM loginInfo WHERE userID = ?', (userID))
         self.close()
-
-
-db = LoginDB()
