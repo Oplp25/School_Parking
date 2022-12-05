@@ -1,6 +1,8 @@
 import cherrypy
-from Database import loginDatabase
-import os
+import os, sys
+print(os.getcwd())
+sys.path.insert(0,os.getcwd()+r"\Database\databaseCode")
+import loginDatabase
 
 lDB = loginDatabase.LoginDB()
 
