@@ -38,3 +38,11 @@ class DB:
         self.cur.execute("DELETE FROM users WHERE userID = ?",(rqUserID,))
         self.conn.commit()
         self.close()
+    
+    def checkIsStaff(self,userId):
+        self.open()
+        bool1=self.cur.execute(f'SELECT isStaff FROM users WHERE usedID = "{userId}"')
+        self.conn.commit()
+        bool1=bool1.fetchall()
+        self.close()
+        return bool1
