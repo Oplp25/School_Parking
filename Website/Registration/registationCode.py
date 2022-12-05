@@ -1,8 +1,10 @@
 import cherrypy
-#from Database import loginDatabase as lDB
-import os
+import os, sys
+print(os.getcwd())
+sys.path.insert(0,os.getcwd()+r"\Database\databaseCode")
+import loginDatabase
 
-#lDB
+lDB = loginDatabase.LoginDB()
 
 class MyWebpage(object):
     @cherrypy.expose
@@ -11,8 +13,11 @@ class MyWebpage(object):
 
     @cherrypy.expose
     def registerUser(self, user=" ", passw=" ", conpassw=" "):
-
-        return open(os.path.abspath(__file__)[:-11]+"\clientRegistration.html")
+        if passw != conpassw:
+            return open(os.path.abspath(__file__)[:-11]+"\clientRegistrationPFail.html")
+        else:
+            lDB.insertNewUser(user, passw)
+            return open(os.path.abspath(__file__)[:-11]+"\clientRegistration.html")
 
 
 if __name__ == '__main__':
