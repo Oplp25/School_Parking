@@ -39,9 +39,13 @@ class DB:
         self.conn.commit()
         self.close()
     
+    def editValue(self,userId,field,newValue):
+        self.open()
+        self.cur.execute(f'UPDATE users {field} = {newValue} WHERE userID = {userId}')
+        self.close()
     def checkIsStaff(self,userId):
         self.open()
-        bool1=self.cur.execute(f'SELECT isStaff FROM users WHERE usedID = "{userId}"')
+        bool1=self.cur.execute(f'SELECT isStaff FROM users WHERE userID = "{userId}"')
         self.conn.commit()
         bool1=bool1.fetchall()
         self.close()
