@@ -5,7 +5,7 @@ import loginDatabase
 
 lDB = loginDatabase.LoginDB()
 
-class MyWebpage(object):
+class RegistrationWebpage(object):
     @cherrypy.expose
     def index(self):
         return open(os.path.abspath(__file__)[:-11]+"\clientRegistration.html")
@@ -14,10 +14,12 @@ class MyWebpage(object):
     def registerUser(self, user=" ", passw=" ", conpassw=" "):
         if passw != conpassw:
             return open(os.path.abspath(__file__)[:-11]+"\clientRegistrationPFail.html")
+        elif loginDatabase.CheckUsername(user) != []:
+            return open(os.path.abspath(__file__)[:-11]+"\clientRegistrationUFail.html")
         else:
             lDB.insertNewUser(user, passw)
             return open(os.path.abspath(__file__)[:-11]+"\clientRegistration.html")
 
 
 if __name__ == '__main__':
-    cherrypy.quickstart(MyWebpage())
+    cherrypy.quickstart(RegistrationWebpage())

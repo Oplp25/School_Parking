@@ -5,7 +5,7 @@ import os
 
 class LoginDB(object):
     def __init__(self):
-        self.conn = sqlite3.connect(os.path.abspath(__file__)[:-17]+r"\Users.db", detect_types=sqlite3.PARSE_DECLTYPES |
+        self.conn = sqlite3.connect(str(os.getcwd()).replace('databaseCode','Databases')+"\\Users.db", detect_types=sqlite3.PARSE_DECLTYPES |
                                     sqlite3.PARSE_COLNAMES)
         self.cur = self.conn.cursor()
         self.cur.execute("""CREATE TABLE IF NOT EXISTS loginInfo
@@ -17,7 +17,7 @@ class LoginDB(object):
         self.conn.commit()
 
     def open(self):
-        self.conn = sqlite3.connect("Database/Users.db", detect_types=sqlite3.PARSE_DECLTYPES |
+        self.conn = sqlite3.connect(str(os.getcwd()).replace('databaseCode','Databases')+"\\Users.db", detect_types=sqlite3.PARSE_DECLTYPES |
                                     sqlite3.PARSE_COLNAMES)
         self.cur = self.conn.cursor()
 
@@ -35,5 +35,12 @@ class LoginDB(object):
 
     def deleteUser(self, userID):
         self.open()
-        self.cur.execute('DELETE FROM loginInfo WHERE userID = ?', (userID))
+        self.cur.execute('DELETE FROM loginInfo WHERE userID = ?', (userID,))
         self.close()
+    
+    def CheckUsername(self, username):
+        self.open()
+        self.cur.execute('SELECT * FROM loginInfo WHERE username = ?', (username,))
+        rows = self.cur.fetchall()
+        self.close()
+        return rows
