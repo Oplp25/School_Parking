@@ -5,7 +5,8 @@ import os
 
 class LoginDB(object):
     def __init__(self):
-        self.conn = sqlite3.connect(os.getcwd()+r"\Database\Databases\Users.db", detect_types=sqlite3.PARSE_DECLTYPES |
+        self.path = os.getcwd().partition("School_Parking")
+        self.conn = sqlite3.connect(self.path[0]+self.path[1]+r"\Database\Databases\Users.db", detect_types=sqlite3.PARSE_DECLTYPES |
                                     sqlite3.PARSE_COLNAMES)
         self.cur = self.conn.cursor()
         self.cur.execute("""CREATE TABLE IF NOT EXISTS loginInfo
@@ -17,7 +18,7 @@ class LoginDB(object):
         self.conn.commit()
 
     def open(self):
-        self.conn = sqlite3.connect(os.getcwd()+r"\Database\Databases\Users.db", detect_types=sqlite3.PARSE_DECLTYPES |
+        self.conn = sqlite3.connect(self.path[0]+self.path[1]+r"\Database\Databases\Users.db", detect_types=sqlite3.PARSE_DECLTYPES |
                                     sqlite3.PARSE_COLNAMES)
         self.cur = self.conn.cursor()
 
@@ -38,9 +39,11 @@ class LoginDB(object):
         self.cur.execute('DELETE FROM loginInfo WHERE userID = ?', (userID,))
         self.close()
     
-    def CheckUsername(self, username):
+    def logIn(self, user, passw):
         self.open()
-        self.cur.execute('SELECT * FROM loginInfo WHERE username = ?', (username,))
-        rows = self.cur.fetchall()
+        self.cur.execute('SELECT password FROM loginInfo WHERE username = ?', (user,))
+        password = self.cur.fetchone()
         self.close()
-        return rows
+        if password == hashlib.sha256(passw).hexdigest():
+            return True
+        return False

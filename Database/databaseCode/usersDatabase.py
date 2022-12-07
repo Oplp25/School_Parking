@@ -4,7 +4,8 @@ import sqlite3,os
 
 class DB:
     def __init__(self):
-        self.conn = sqlite3.connect(os.getcwd()+r"\Database\Databases\Users.db", detect_types=sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES)
+        self.path = os.getcwd().partition("School_Parking")
+        self.conn = sqlite3.connect(self.path[0]+self.path[1]+r"\Database\Databases\Users.db", detect_types=sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES)
         self.cur = self.conn.cursor()
         self.cur.execute(
             """CREATE TABLE IF NOT EXISTS users
@@ -20,7 +21,7 @@ class DB:
         self.conn.commit()
 
     def open(self):
-        self.conn = sqlite3.connect(os.getcwd()+r"\Database\Databases\Users.db", detect_types=sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES)
+        self.conn = sqlite3.connect(self.path[0]+self.path[1]+r"\Database\Databases\Users.db", detect_types=sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES)
         self.cur = self.conn.cursor()
 
     def close(self):
@@ -39,9 +40,13 @@ class DB:
         self.conn.commit()
         self.close()
     
+    def editValue(self,userId,field,newValue):
+        self.open()
+        self.cur.execute(f'UPDATE users {field} = {newValue} WHERE userID = {userId}')
+        self.close()
     def checkIsStaff(self,userId):
         self.open()
-        bool1=self.cur.execute(f'SELECT isStaff FROM users WHERE usedID = "{userId}"')
+        bool1=self.cur.execute(f'SELECT isStaff FROM users WHERE userID = "{userId}"')
         self.conn.commit()
         bool1=bool1.fetchall()
         self.close()
