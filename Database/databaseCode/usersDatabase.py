@@ -15,7 +15,8 @@ class DB:
      hasPass INTEGER NOT NULL ON CONFLICT REPLACE DEFAULT 0, 
      infractionsCount INTEGER NOT NULL ON CONFLICT REPLACE DEFAULT 0,
      datePassStarted TEXT NOT NULL,
-     datePassEnds TEXT NOT NULL )
+     datePassEnds TEXT NOT NULL,
+     isPartTime INTEGER NOT NULL ON CONFLICT REPLACE DEFAULT 0 )
                 """)
         self.conn.commit()
 
@@ -26,10 +27,10 @@ class DB:
     def close(self):
         self.conn.close()
 
-    def addUser(self, rqName, rqHasSpace=False, rqIsStaff=False, rqHasPass=False, rqInfractionsCount=0, rqDatePassStarted="", rqDatePassEnds=""):
+    def addUser(self, rqName, rqHasSpace=False, rqIsStaff=False, rqHasPass=False, rqInfractionsCount=0, rqDatePassStarted="", rqDatePassEnds="", rqIsPartTime=""):
         self.open()
-        self.cur.execute("INSERT INTO users (name, hasSpace, isStaff, hasPass, infractionsCount, datePassStarted, datePassEnds) VALUES (?,?,?,?,?,?,?)",
-                         (rqName, rqHasSpace, rqIsStaff, rqHasPass, rqInfractionsCount, rqDatePassStarted, rqDatePassEnds))
+        self.cur.execute("INSERT INTO users (name, hasSpace, isStaff, hasPass, infractionsCount, datePassStarted, datePassEnds , isPartTime) VALUES (?,?,?,?,?,?,?,?)",
+                         (rqName, rqHasSpace, rqIsStaff, rqHasPass, rqInfractionsCount, rqDatePassStarted, rqDatePassEnds,rqIsPartTime))
         self.conn.commit()
         self.close()
     
