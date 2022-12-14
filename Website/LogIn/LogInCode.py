@@ -8,7 +8,7 @@ import loginDatabase
 lDB = loginDatabase.LoginDB()
 
 
-class RegistrationWebpage(object):
+class LoginWebpage(object):
     @cherrypy.expose
     def index(self):
         return open(path[0]+path[1]+r"\Website\LogIn\LogIn.html")
@@ -16,10 +16,10 @@ class RegistrationWebpage(object):
     @cherrypy.expose
     def LogIN(self, user=" ", passw=" "):
         if lDB.logIn(user, passw):
-            return open(path[0]+path[1]+r"\Website\LogIn\success.html")
+            return open(path[0]+path[1]+r"s\main.html")
         else:
             return open(path[0]+path[1]+r"\Website\LogIn\LogIn.html")
 
 
 if __name__ == '__main__':
-    cherrypy.quickstart(RegistrationWebpage())
+    cherrypy.quickstart(LoginWebpage())
