@@ -20,9 +20,11 @@ class RegistrationWebpage(object):
         elif lDB.CheckUsername(user) != [] and user != " ":
             return open(path[0]+path[1]+r"\Website\Registration\clientRegistrationUFail.html")
         else:
-            lDB.insertNewUser(user, passw)
-            uDB.addUser(name, 0, isStaff, 0)
+            if not(name == " " or user == " " or passw == " " or conpassw == " "):
+                lDB.insertNewUser(user, passw)
+                uDB.addUser(name, 0, isStaff, 0)
             return open(path[0]+path[1]+r"\Website\Registration\clientRegistration.html")
+
 
 
 if __name__ == '__main__':

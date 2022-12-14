@@ -39,11 +39,19 @@ class LoginDB(object):
         self.cur.execute('DELETE FROM loginInfo WHERE userID = ?', (userID,))
         self.close()
     
-    def logIn(self, user, passw):
+    def CheckUsername(self, username):
         self.open()
-        self.cur.execute('SELECT password FROM loginInfo WHERE username = ?', (user,))
-        password = self.cur.fetchone()
+        self.cur.execute('SELECT * FROM loginInfo WHERE username = ?', (username,))
+        rows = self.cur.fetchall()
         self.close()
-        if password == hashlib.sha256(passw).hexdigest():
+        return rows
+
+    def logIn(self, username, password):
+        self.open()
+        self.cur.execute('SELECT password FROM loginInfo WHERE username = ?', (username,))
+        passw = self.cur.fetchone()
+        self.close()
+        if hashlib.sha256(bytes(password, 'utf-8')).hexdigest() == passw[0]:
             return True
         return False
+
