@@ -18,11 +18,10 @@ class MainWebsite(object):
 
     @cherrypy.expose
     def login(self):
-        return logWeb.index(self)
-
+        return logWeb.index()
     @cherrypy.expose
     def register(self):
-        return signUp.index(self)
+        return signUp.index()
 
 if __name__ == '__main__':
     cherrypy.quickstart(MainWebsite())

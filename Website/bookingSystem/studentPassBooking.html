@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Book a Pass</title>
+        <style>
+            form{text-align:center;font-size:50px;vertical-align: center;}
+            h1{text-align: center;text-decoration-line: underline;}
+            input.submit{padding-top: 10px;padding-bottom: 10px;padding-left: 25px;padding-right: 25px;}
+            p{height:10px;text-align:center;}
+        </style>
+    </head>
+    <body>
+        <h1>What Length of time would you like your pass to last?</h1>
+        <br><br><br><br><br>
+        <form action="studentPassBooking">
+            <input type="radio" id="Half Term" name="length" value="Half Term">
+            <label for="Half Term">Half Term</label><br>
+            <input type="radio" id="Term" name="length" value="Term">
+            <label for="Term">Term</label>
+            <br>
+            <input type="radio" id="Year" name="length" value="Year">
+            <label for="Year">Year</label>
+            <input class='submit' type="submit" value="Submit">
+        </form>
+
+    </body>
+</html>
