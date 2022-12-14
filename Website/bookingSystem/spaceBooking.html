@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Book a Space</title>
+        <style>
+            form{text-align:center;font-size:50px;vertical-align: center;}
+            h1{text-align: center;text-decoration-line: underline;}
+            input.submit{padding-top: 10px;padding-bottom: 10px;padding-left: 25px;padding-right: 25px;}
+            p{height:10px;text-align:center;}
+        </style>
+    </head>
+    <body>
+        <h1>In what car park would you like your space to be?</h1>
+        <br><br><br><br><br>
+        <form action="spaceBooking">
+            <input type="radio" id="n" name="lot" value="n">
+            <label for="n">North</label><br>
+            <input type="radio" id="s" name="lot" value="s">
+            <label for="s">South</label><br>
+            <input type="radio" id="m" name="lot" value="m">
+            <label for="m">Middle</label>
+            <p>Would you like a disabled parking space?</p><br>
+            <input type="radio" id="True" name="disabled" value="True">
+            <label for="True">Yes</label><br>
+            <input type="radio" id="False" name="lot" value="False">
+            <label for="False">No</label><br>
+            <input class='submit' type="submit" value="Submit">
+        </form>
+    </body>
+</html>
