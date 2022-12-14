@@ -68,6 +68,7 @@ class BookingWebpage(object):
         newD=spacesDatabase.SpacesLog()
         newD.bookSpace(lot,bool(disabled))
         self.newDB.editValue(self.booker,'hasSpace',True)
+        self.newDB.editValue(self.booker,'spaceLoc',lot)
 def getHalfTermEndDate():
     return datetime.date.today()
 def getTermEndDate():

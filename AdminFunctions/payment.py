@@ -1,8 +1,12 @@
-isStaff = 0
+import sys,os
+sys.path.insert(0,str(os.getcwd()).partition('School_Parking')[0]+'School_Parking\\Database\\databaseCode')
+import usersDatabase
 charged = False
 def costMaker(UserID):
     global payTime
     global WD
+    db=usersDatabase.DB()
+    isStaff=db.checkIsStaff(UserID)
     if isStaff == 0: #they are a student
         while charged == False:
             payTime = input.upper("please input HT for half term, T for term or Y for Year")
@@ -35,7 +39,7 @@ def costMaker(UserID):
 def userPaying(cost):
     pass
     #bank transaction happpens
-def recipt(cost,paytime,WD):
+def recipt(cost,paytime,WD,isStaff):
     if isStaff == 0:    
         print("You paid for " + paytime + "it cost " + cost)
     elif isStaff == 1:
