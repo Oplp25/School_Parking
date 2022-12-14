@@ -17,7 +17,8 @@ class DB:
      infractionsCount INTEGER NOT NULL ON CONFLICT REPLACE DEFAULT 0,
      datePassStarted TEXT NOT NULL,
      datePassEnds TEXT NOT NULL,
-     isPartTime INTEGER NOT NULL ON CONFLICT REPLACE DEFAULT 0 )
+     isPartTime INTEGER NOT NULL ON CONFLICT REPLACE DEFAULT 0,
+     spaceLoc TEXT NOT NULL ON CONFLICT REPLACE DEFAULT "" )
                 """)
         self.conn.commit()
 
@@ -28,10 +29,10 @@ class DB:
     def close(self):
         self.conn.close()
 
-    def addUser(self, rqName, rqHasSpace=False, rqIsStaff=False, rqHasPass=False, rqInfractionsCount=0, rqDatePassStarted="", rqDatePassEnds="", rqIsPartTime=""):
+    def addUser(self, rqName, rqHasSpace=False, rqIsStaff=False, rqHasPass=False, rqInfractionsCount=0, rqDatePassStarted="", rqDatePassEnds="", rqIsPartTime="",rqSpaceLoc=""):
         self.open()
-        self.cur.execute("INSERT INTO users (name, hasSpace, isStaff, hasPass, infractionsCount, datePassStarted, datePassEnds , isPartTime) VALUES (?,?,?,?,?,?,?,?)",
-                         (rqName, rqHasSpace, rqIsStaff, rqHasPass, rqInfractionsCount, rqDatePassStarted, rqDatePassEnds,rqIsPartTime))
+        self.cur.execute("INSERT INTO users (name, hasSpace, isStaff, hasPass, infractionsCount, datePassStarted, datePassEnds , isPartTime,spaceLoc) VALUES (?,?,?,?,?,?,?,?,?)",
+                         (rqName, rqHasSpace, rqIsStaff, rqHasPass, rqInfractionsCount, rqDatePassStarted, rqDatePassEnds,rqIsPartTime,rqSpaceLoc))
         self.conn.commit()
         self.close()
     
@@ -43,12 +44,13 @@ class DB:
     
     def editValue(self,userId,field,newValue):
         self.open()
-        self.cur.execute(f'UPDATE users {field} = {newValue} WHERE userID = {userId}')
+        self.cur.execute(f'UPDATE users SET {field} = {newValue} WHERE userID = {userId}')
+        self.conn.commit()
         self.close()
     def checkIsStaff(self,userId):
         self.open()
         bool1=self.cur.execute(f'SELECT isStaff FROM users WHERE userID = "{userId}"')
         self.conn.commit()
-        bool1=bool1.fetchall()
+        bool2=bool1.fetchall()
         self.close()
-        return bool1
+        return bool2[0][0]
