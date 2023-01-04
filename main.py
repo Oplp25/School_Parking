@@ -14,10 +14,10 @@ signUp = sU.RegistrationWebpage
 class MainWebsite(object):
     @cherrypy.expose
     def index(self):
-        return open(path[0]+path[1]+r"\Website\LogIn\prelogin.html")
-
+        return open(path[0]+path[1]+r"\Website\LogIn\Preloginmain.html")
     @cherrypy.expose
     def login(self):
+        print("fuck\n"*100)
         return logWeb.index(self)
     @cherrypy.expose
     def register(self):
