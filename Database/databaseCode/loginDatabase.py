@@ -51,7 +51,7 @@ class LoginDB(object):
         self.cur.execute('SELECT password FROM loginInfo WHERE username = ?', (username,))
         passw = self.cur.fetchone()
         self.close()
-        if hashlib.sha256(bytes(password, 'utf-8')).hexdigest() == passw[0]:
+        if hashlib.sha256(bytes(password, 'utf-8')).hexdigest() == passw:
             return True
         return False
 
