@@ -14,8 +14,9 @@ class RegistrationWebpage(object):
         return open(path[0]+path[1]+r"\Website\Registration\clientRegistration.html")
 
     @cherrypy.expose
-    def registerUser(self, name=" ",isStaff=False, user=" ", passw=" ", conpassw=" "):
+    def registerUser(self, name, isStaff, user, passw, conpassw):
         if passw != conpassw:
+            print("-"*50,passw,conpassw,"-"*50)
             return open(path[0]+path[1]+r"\Website\Registration\clientRegistrationPFail.html")
         elif lDB.CheckUsername(user) != [] and user != " ":
             return open(path[0]+path[1]+r"\Website\Registration\clientRegistrationUFail.html")

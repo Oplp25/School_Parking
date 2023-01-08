@@ -14,11 +14,11 @@ class LoginWebpage(object):
         return open(path[0]+path[1]+r"\Website\LogIn\LogIn.html")
 
     @cherrypy.expose
-    def LogIN(self, user=" ", passw=" "):
+    def LogIN(self, user, passw):
         if lDB.logIn(user, passw):
-            return open(path[0]+path[1]+r"\Website\main.html")
+            return open(path[0]+path[1]+r"\Website\teacherclientmain.html").read().replace("--USERNAME--", f"<b>Welcome {user}<b>")
         else:
-            return open(path[0]+path[1]+r"\Website\LogIn\LogIn.html")
+            return open(path[0]+path[1]+r"\Website\LogIn\LogInFail.html")
 
 
 if __name__ == '__main__':

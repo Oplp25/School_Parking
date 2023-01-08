@@ -47,6 +47,7 @@ class DB:
         self.cur.execute(f'UPDATE users SET {field} = {newValue} WHERE userID = {userId}')
         self.conn.commit()
         self.close()
+        
     def checkIsStaff(self,userId):
         self.open()
         bool1=self.cur.execute(f'SELECT isStaff FROM users WHERE userID = "{userId}"')

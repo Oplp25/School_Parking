@@ -19,14 +19,14 @@ class MainWebsite(object):
     def login(self):
         return logWeb.index(self)
     @cherrypy.expose
-    def LogIN(self, user=" ", passw=" "):
-        logWeb.LogIN(user, passw)
+    def LogIN(self, user, passw):
+        return logWeb.LogIN(None, user, passw)
     @cherrypy.expose
     def register(self):
         return signUp.index(self)
     @cherrypy.expose
-    def registerUser(self, name=" ",isStaff=False, user=" ", passw=" ", conpassw=" "):
-        signUp.registerUser(name,isStaff,user,passw,conpassw)
+    def registerUser(self, name, isStaff, user, passw, conpassw):
+        return signUp.registerUser(None, name, isStaff, user, passw, conpassw)
 
 if __name__ == '__main__':
     cherrypy.quickstart(MainWebsite())
