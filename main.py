@@ -1,4 +1,4 @@
-#This will be the main file, where we call all the functions and this will be what we run when the code is completed.
+#:t:his will be the main file, where we call all the functions and this will be what we run when the code is completed.
 import cherrypy
 import os
 import sys
