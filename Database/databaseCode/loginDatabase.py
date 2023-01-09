@@ -45,6 +45,13 @@ class LoginDB(object):
         rows = self.cur.fetchall()
         self.close()
         return rows
+    
+    def FetchID(self, username):
+        self.open()
+        self.cur.execute('SELECT userID FROM loginInfo WHERE username = ?', (username,))
+        rows = self.cur.fetchone()
+        self.close()
+        return rows
 
     def logIn(self, username, password):
         self.open()

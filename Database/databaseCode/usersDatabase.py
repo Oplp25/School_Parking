@@ -29,6 +29,13 @@ class DB:
     def close(self):
         self.conn.close()
 
+    def selectUser(self, userID):
+        self.open()
+        self.cur.execute('SELECT * FROM users WHERE userID = ?', (userID,))
+        names = self.cur.fetchone()
+        self.close()
+        return names
+
     def addUser(self, rqName, rqHasSpace=False, rqIsStaff=False, rqHasPass=False, rqInfractionsCount=0, rqDatePassStarted="", rqDatePassEnds="", rqIsPartTime="",rqSpaceLoc=""):
         self.open()
         self.cur.execute("INSERT INTO users (name, hasSpace, isStaff, hasPass, infractionsCount, datePassStarted, datePassEnds , isPartTime,spaceLoc) VALUES (?,?,?,?,?,?,?,?,?)",
@@ -48,10 +55,9 @@ class DB:
         self.conn.commit()
         self.close()
         
-    def checkIsStaff(self,userId):
+    def checkIsStaff(self,rqUserID):
         self.open()
-        bool1=self.cur.execute(f'SELECT isStaff FROM users WHERE userID = "{userId}"')
-        self.conn.commit()
-        bool2=bool1.fetchall()
+        self.cur.execute('SELECT isStaff FROM users WHERE UserID = ?', (rqUserID,))
+        isStaff = self.cur.fetchall()
         self.close()
-        return bool2[0][0]
+        return isStaff
