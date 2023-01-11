@@ -2,14 +2,58 @@
 
 <html>
 
+<head>
+    <style>
+        div.menubar {
+            width: 99%;
+            position: absolute;
+            left: 0.25%;
+            border-style: solid;
+            border-width: 2px;
+            border-left: 0px;
+            border-right: 0px;
+            padding: 12px;
+            text-align: right;
+        }
+
+        img.logo {
+            width: 150px;
+            height: auto;
+            position: absolute;
+            top: 6px;
+            right: 10px;
+        }
+
+        h1.title {
+            position: relative;
+        }
+
+        div.titlebar {
+            position: relative;
+            font-size: 225%;
+            text-decoration: underline red;
+            padding-top: 0.5%;
+            padding-bottom: 0.9%;
+        }
+    </style>
+</head>
+
 <body>
-    <h1>Redborne Upper School Parking</h1>
+    <div class="titlebar">
+        <h1 class="title">
+            Redborne Upper School Parking
+        </h1>
+        <img class="logo" src="https://drive.google.com/uc?export=view&id=1WK0BwA4rvfwdcqeuGsFeDK8ikaq8ZwQA"
+            alt="School Logo">
+    </div>
+    <div class="menubar">
+    </div><br><br>
     <form method="post" action="LogIN">
         <label for="user">Username</label><br>
         <input type="text" value="" style="width: 200px" name="user" /><br>
         <label for="passw">Password</label><br>
         <input type="password" value="" style="width: 200 px" name="passw" /><br>
-        <button type="submit">LogIn</button>
+        <button style="margin-top: 0.8rem;" type="submit">LogIn</button>
     </form>
 </body>
 
