@@ -12,7 +12,8 @@ class LoginDB(object):
         self.cur.execute("""CREATE TABLE IF NOT EXISTS loginInfo
         (userID INTEGER PRIMARY KEY,
         username TEXT NOT NULL,
-        password TEXT NOT NULL
+        password TEXT NOT NULL,
+        isAdmin INTEGER NOT NULL ON CONFLICT REPLACE DEFAULT 0
         )
         """)
         self.conn.commit()
@@ -25,11 +26,11 @@ class LoginDB(object):
     def close(self):
         self.conn.close()
 
-    def insertNewUser(self, username, password):
+    def insertNewUser(self, username, password, isAdmin):
         self.open()
         password = hashlib.sha256(bytes(password, 'utf-8')).hexdigest()
         self.cur.execute(
-            'INSERT INTO loginInfo (username,password) VALUES(?,?)', (username, password))
+            'INSERT INTO loginInfo (username,password,isAdmin) VALUES(?,?,?)', (username, password, isAdmin))
         self.conn.commit()
         password = 0
         self.close()
@@ -45,6 +46,13 @@ class LoginDB(object):
         rows = self.cur.fetchall()
         self.close()
         return rows
+    
+    def FetchID(self, username):
+        self.open()
+        self.cur.execute('SELECT userID FROM loginInfo WHERE username = ?', (username,))
+        rows = self.cur.fetchone()
+        self.close()
+        return rows
 
     def logIn(self, username, password):
         self.open()
@@ -55,3 +63,9 @@ class LoginDB(object):
             return True
         return False
 
+    def checkAdministrator(self, username):
+        self.open()
+        self.cur.execute("SELECT isAdmin FROM loginInfo WHERE username = ?", (username,))
+        isAdmin = self.cur.fetchone()
+        self.close()
+        return isAdmin

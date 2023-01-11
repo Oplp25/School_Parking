@@ -11,6 +11,7 @@ class DB:
             """CREATE TABLE IF NOT EXISTS users
     (userID INTEGER PRIMARY KEY,
      name TEXT NOT NULL,
+     email TEXT NOT NULL,
      hasSpace INTEGER NOT NULL ON CONFLICT REPLACE DEFAULT 0,
      isStaff INTEGER NOT NULL ON CONFLICT REPLACE DEFAULT 0,
      hasPass INTEGER NOT NULL ON CONFLICT REPLACE DEFAULT 0, 
@@ -29,10 +30,17 @@ class DB:
     def close(self):
         self.conn.close()
 
-    def addUser(self, rqName, rqHasSpace=False, rqIsStaff=False, rqHasPass=False, rqInfractionsCount=0, rqDatePassStarted="", rqDatePassEnds="", rqIsPartTime="",rqSpaceLoc=""):
+    def selectUser(self, userID):
         self.open()
-        self.cur.execute("INSERT INTO users (name, hasSpace, isStaff, hasPass, infractionsCount, datePassStarted, datePassEnds , isPartTime,spaceLoc) VALUES (?,?,?,?,?,?,?,?,?)",
-                         (rqName, rqHasSpace, rqIsStaff, rqHasPass, rqInfractionsCount, rqDatePassStarted, rqDatePassEnds,rqIsPartTime,rqSpaceLoc))
+        self.cur.execute('SELECT * FROM users WHERE userID = ?', (userID,))
+        names = self.cur.fetchone()
+        self.close()
+        return names
+
+    def addUser(self, rqName, rqEmail, rqHasSpace=False, rqIsStaff=False, rqHasPass=False, rqInfractionsCount=0, rqDatePassStarted="", rqDatePassEnds="", rqIsPartTime="",rqSpaceLoc=""):
+        self.open()
+        self.cur.execute("INSERT INTO users (name, email, hasSpace, isStaff, hasPass, infractionsCount, datePassStarted, datePassEnds , isPartTime, spaceLoc) VALUES (?,?,?,?,?,?,?,?,?,?)",
+                         (rqName, rqEmail, rqHasSpace, rqIsStaff, rqHasPass, rqInfractionsCount, rqDatePassStarted, rqDatePassEnds,rqIsPartTime,rqSpaceLoc))
         self.conn.commit()
         self.close()
     
@@ -47,11 +55,11 @@ class DB:
         self.cur.execute(f'UPDATE users SET {field} = {newValue} WHERE userID = {userId}')
         self.conn.commit()
         self.close()
-    def checkIsStaff(self,userId):
+        
+    def checkIsStaff(self,rqUserID):
         self.open()
-        bool1=self.cur.execute(f'SELECT isStaff FROM users WHERE userID = "{userId}"')
-        self.conn.commit()
-        bool2=bool1.fetchall()
+        self.cur.execute('SELECT isStaff FROM users WHERE UserID = ?', (rqUserID,))
+        isStaff = self.cur.fetchall()
         self.close()
         return bool2[0][0]
     

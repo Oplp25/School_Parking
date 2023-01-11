@@ -14,14 +14,19 @@ signUp = sU.RegistrationWebpage
 class MainWebsite(object):
     @cherrypy.expose
     def index(self):
-        return open(path[0]+path[1]+r"\Website\LogIn\prelogin.html")
-
+        return open(path[0]+path[1]+r"\Website\LogIn\Preloginmain.html")
     @cherrypy.expose
     def login(self):
         return logWeb.index(self)
     @cherrypy.expose
+    def LogIN(self, user, passw):
+        return logWeb.LogIN(None, user, passw)
+    @cherrypy.expose
     def register(self):
         return signUp.index(self)
+    @cherrypy.expose
+    def registerUser(self, name, isStaff, user, passw, conpassw, email):
+        return signUp.registerUser(None, name, isStaff, user, passw, conpassw, email)
 
 if __name__ == '__main__':
     cherrypy.quickstart(MainWebsite())

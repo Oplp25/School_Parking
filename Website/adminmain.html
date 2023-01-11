@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-
 <html>
 
 <head>
+    <title>Redborne Upper School Parking</title>
     <style>
         div.menubar {
             width: 99%;
@@ -12,7 +12,7 @@
             border-width: 2px;
             border-left: 0px;
             border-right: 0px;
-            padding: 12px;
+            padding: 2px;
             text-align: right;
         }
 
@@ -41,20 +41,19 @@
 <body>
     <div class="titlebar">
         <h1 class="title">
-            Redborne Upper School Parking
+            Redborne Upper School Parking Admin
         </h1>
         <img class="logo" src="https://drive.google.com/uc?export=view&id=1WK0BwA4rvfwdcqeuGsFeDK8ikaq8ZwQA"
             alt="School Logo">
     </div>
     <div class="menubar">
+        <b>Welcome Administrator --USERNAME--</b>
     </div><br><br>
-    <form method="post" action="LogIN">
-        <label for="user">Username</label><br>
-        <input type="text" value="" style="width: 200px" name="user" /><br>
-        <label for="passw">Password</label><br>
-        <input type="password" value="" style="width: 200 px" name="passw" /><br>
-        <button style="margin-top: 0.8rem;" type="submit">LogIn</button>
-    </form>
+    <div>
+        <form method="POST" action="register">
+            <input type="submit" value="Register a new user" />
+        </form>
+    </div>
 </body>
 
 </html>
