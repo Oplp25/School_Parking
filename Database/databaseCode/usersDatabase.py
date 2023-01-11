@@ -61,7 +61,7 @@ class DB:
         self.cur.execute('SELECT isStaff FROM users WHERE UserID = ?', (rqUserID,))
         isStaff = self.cur.fetchall()
         self.close()
-        return bool2[0][0]
+        return isStaff[0][0]
     
     def getValue(self,userId,field):
         self.open()
