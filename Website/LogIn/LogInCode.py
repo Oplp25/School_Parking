@@ -18,10 +18,13 @@ class LoginWebpage(object):
     @cherrypy.expose
     def LogIN(self, user, passw):
         if lDB.logIn(user, passw):
-            if uDB.checkIsStaff(lDB.FetchID(user)[0]):
-                return open(path[0]+path[1]+r"\Website\teacherclientmain.html").read().replace("--USERNAME--", f"<b>Welcome {uDB.selectUser(lDB.FetchID(user)[0])[1]}<b>")
-            else:
-                return open(path[0]+path[1]+r"\Website\studentclientmain.html").read().replace("--USERNAME--", f"<b>Welcome {uDB.selectUser(lDB.FetchID(user)[0])[1]}<b>")
+            if lDB.checkAdministrator(user)[0] == 0:
+                if uDB.checkIsStaff(lDB.FetchID(user)[0])[0][0] == 1:
+                    return open(path[0]+path[1]+r"\Website\teacherclientmain.html").read().replace("--USERNAME--", uDB.selectUser(lDB.FetchID(user)[0])[1])
+                else:
+                    return open(path[0]+path[1]+r"\Website\studentclientmain.html").read().replace("--USERNAME--", uDB.selectUser(lDB.FetchID(user)[0])[1])
+            elif lDB.checkAdministrator(user)[0] == 1:
+                return open(path[0]+path[1]+r"\Website\adminmain.html").read().replace("--USERNAME--", uDB.selectUser(lDB.FetchID(user)[0])[1])
         else:
             return open(path[0]+path[1]+r"\Website\LogIn\LogInFail.html")
 

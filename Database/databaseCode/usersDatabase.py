@@ -11,6 +11,7 @@ class DB:
             """CREATE TABLE IF NOT EXISTS users
     (userID INTEGER PRIMARY KEY,
      name TEXT NOT NULL,
+     email TEXT NOT NULL,
      hasSpace INTEGER NOT NULL ON CONFLICT REPLACE DEFAULT 0,
      isStaff INTEGER NOT NULL ON CONFLICT REPLACE DEFAULT 0,
      hasPass INTEGER NOT NULL ON CONFLICT REPLACE DEFAULT 0, 
@@ -36,10 +37,10 @@ class DB:
         self.close()
         return names
 
-    def addUser(self, rqName, rqHasSpace=False, rqIsStaff=False, rqHasPass=False, rqInfractionsCount=0, rqDatePassStarted="", rqDatePassEnds="", rqIsPartTime="",rqSpaceLoc=""):
+    def addUser(self, rqName, rqEmail, rqHasSpace=False, rqIsStaff=False, rqHasPass=False, rqInfractionsCount=0, rqDatePassStarted="", rqDatePassEnds="", rqIsPartTime="",rqSpaceLoc=""):
         self.open()
-        self.cur.execute("INSERT INTO users (name, hasSpace, isStaff, hasPass, infractionsCount, datePassStarted, datePassEnds , isPartTime,spaceLoc) VALUES (?,?,?,?,?,?,?,?,?)",
-                         (rqName, rqHasSpace, rqIsStaff, rqHasPass, rqInfractionsCount, rqDatePassStarted, rqDatePassEnds,rqIsPartTime,rqSpaceLoc))
+        self.cur.execute("INSERT INTO users (name, email, hasSpace, isStaff, hasPass, infractionsCount, datePassStarted, datePassEnds , isPartTime, spaceLoc) VALUES (?,?,?,?,?,?,?,?,?,?)",
+                         (rqName, rqEmail, rqHasSpace, rqIsStaff, rqHasPass, rqInfractionsCount, rqDatePassStarted, rqDatePassEnds,rqIsPartTime,rqSpaceLoc))
         self.conn.commit()
         self.close()
     

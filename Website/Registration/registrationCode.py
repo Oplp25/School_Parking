@@ -14,7 +14,7 @@ class RegistrationWebpage(object):
         return open(path[0]+path[1]+r"\Website\Registration\clientRegistration.html")
 
     @cherrypy.expose
-    def registerUser(self, name, isStaff, user, passw, conpassw):
+    def registerUser(self, name, isStaff, user, passw, conpassw, email):
         if passw != conpassw:
             print("-"*50,passw,conpassw,"-"*50)
             return open(path[0]+path[1]+r"\Website\Registration\clientRegistrationPFail.html")
@@ -22,8 +22,8 @@ class RegistrationWebpage(object):
             return open(path[0]+path[1]+r"\Website\Registration\clientRegistrationUFail.html")
         else:
             if not(name == " " or user == " " or passw == " " or conpassw == " "):
-                lDB.insertNewUser(user, passw)
-                uDB.addUser(name, 0, isStaff, 0)
+                lDB.insertNewUser(user, passw, 1)
+                uDB.addUser(name, email, 0, isStaff, 0)
             return open(path[0]+path[1]+r"\Website\Registration\clientRegistration.html")
 
 

@@ -25,8 +25,8 @@ class MainWebsite(object):
     def register(self):
         return signUp.index(self)
     @cherrypy.expose
-    def registerUser(self, name, isStaff, user, passw, conpassw):
-        return signUp.registerUser(None, name, isStaff, user, passw, conpassw)
+    def registerUser(self, name, isStaff, user, passw, conpassw, email):
+        return signUp.registerUser(None, name, isStaff, user, passw, conpassw, email)
 
 if __name__ == '__main__':
     cherrypy.quickstart(MainWebsite())
