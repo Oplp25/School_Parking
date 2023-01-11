@@ -1,41 +1,27 @@
-import sys,os
+import sys,os,cherrypy
 sys.path.insert(0,str(os.getcwd()).partition('School_Parking')[0]+'School_Parking\\Database\\databaseCode')
 import usersDatabase
 charged = False
-def costMaker(UserID):
-    global payTime
-    global WD
+
+def costMaker(UserID,payTime,WD):#int, str , int
     db=usersDatabase.DB()
     isStaff=db.checkIsStaff(UserID)
+    cost = 0
     if isStaff == 0: #they are a student
-        while charged == False:
-            payTime = input.upper("please input HT for half term, T for term or Y for Year")
-            if payTime == "HT":
-                cost = 55
-                charged = True    
-            elif payTime == "T":
-                cost = 100
-                charged = True
-            elif payTime == "Y":
-                cost = 250
-                charged = True
-            else:
-                print("please input HT for half term, T for term or Y for Year")
+        if payTime == "Half-Term":
+            cost = 55  
+        elif payTime == "Term":
+            cost = 100
+        elif payTime == "Year":
+            cost = 250
     elif isStaff == 1: #they are a staff memeber
-        while charged == False:
-            WD = int(input("how many days are you working in a fortnight?"))
-            while charged == False:
-                payTime = input.upper("please input HT for half term, T for term or Y for Year")
-                if payTime == "HT":
-                    cost = WD*payTime
-                elif payTime == "T":
-                    cost = 2(WD*payTime)
-                elif payTime == "Y":
-                    cost = 6(WD*payTime)
-                else:
-                    print("please input HT for half term, T for term or Y for Year")
+        if payTime == "Half-Term":
+            cost = WD*payTime
+        elif payTime == "Term":
+            cost = 2(WD*payTime)
+        elif payTime == "Year":
+            cost = 6(WD*payTime)
     return cost
-    return WD
 def userPaying(cost):
     pass
     #bank transaction happpens
@@ -45,10 +31,16 @@ def recipt(cost,paytime,WD,isStaff):
     elif isStaff == 1:
         print("You paid for " + WD + "days a week, for" +  paytime+ "and it cost" + cost+".")
         return WD 
-        return paytime
 
-def paymentSystem(userID):
-    cost = 0
-    costMaker(userID)
-    userPaying(cost)
-    recipt(cost,payTime,WD)
+class payWeb():
+    def __init__(self,cost,userID):
+        self.cost=cost
+        self.userID=userID
+    
+    @cherrypy.expose
+    def runWeb(self):
+         return open(str(os.getcwd()).partition('School_Parking')[0]+'School_Parking\\Website\\paymentSystem.HTML').read().replace("insertCostHere",self.cost) 
+
+    def userPaying(self,csv,creditCardNumber, expiryDate, cardHolderName,house, city, postcode):
+        pass
+        #bank transaction happpens

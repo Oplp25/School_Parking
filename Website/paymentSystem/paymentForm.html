@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<head>
+    <title>Payment</title>
+    <style>
+        form{text-align:center;font-size:50px;vertical-align: center;}
+        h1{text-align: center;text-decoration-line: underline;}
+        input.submit{padding-top: 10px;padding-bottom: 10px;padding-left: 25px;padding-right: 25px;}
+        p{height:10px;text-align:center;}
+    </style>
+</head>
+<body>
+    <h1>Insert you credit card details here</h1>
+    <br><br><br><br><br>
+    <form action = userPaying>
+        <p>You owe us £insertCostHere</p>
+        <input type="text" id = "creditCardNumber" class="creditCardNumber" value="creditCardNumber">
+        <label for="creditCardNumber">Please enter your credit card number</label><br>
+
+        <input type="text" id = "csv" class="csv" value="csv">
+        <label for="csv">Please enter your csv</label><br>
+
+        <input type="text" id = "expiryDate" class="expiryDate" value="expiryDate">
+        <label for="expiryDate">Please enter your expiry date</label><br>
+
+        <input type="text" id = "cardHolderName" class="cardHolderName" value="cardHolderName">
+        <label for="cardHolderName">Please enter your full name, as is listed on your card</label><br>
+
+        <input type="text" id = "house" class="house" value="house">
+        <label for="house">Please enter your house number and street name</label><br>
+
+        <input type="text" id = "city" class="city" value="city">
+        <label for="city">Please enter your city name</label><br>
+
+        <input type="text" id = "postcode" class="postcode" value="postcode">
+        <label for="postcode">Please enter your postcode</label><br>
+
+        <input class='submit' type="submit" value="Submit">
+      </form>
+</body>

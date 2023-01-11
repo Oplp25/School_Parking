@@ -27,6 +27,9 @@ class MainWebsite(object):
     @cherrypy.expose
     def registerUser(self, name, isStaff, user, passw, conpassw, email):
         return signUp.registerUser(None, name, isStaff, user, passw, conpassw, email)
-
+    @cherrypy.expose
+    def infraction(self):
+        return open(path[0]+path[1]+r"\Website\LogIn\Preloginmain.html")
+        
 if __name__ == '__main__':
     cherrypy.quickstart(MainWebsite())
