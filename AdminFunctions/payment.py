@@ -3,7 +3,7 @@ sys.path.insert(0,str(os.getcwd()).partition('School_Parking')[0]+'School_Parkin
 import usersDatabase
 charged = False
 
-def costMaker(UserID,payTime,WD):#int, str , int
+def costMaker(UserID, payTime, WD):#int, str , int
     db=usersDatabase.DB()
     isStaff=db.checkIsStaff(UserID)
     cost = 0
@@ -25,7 +25,7 @@ def costMaker(UserID,payTime,WD):#int, str , int
 def userPaying(cost):
     pass
     #bank transaction happpens
-def recipt(cost,paytime,WD,isStaff):
+def recipt(cost, paytime, WD, isStaff):
     if isStaff == 0:    
         print("You paid for " + paytime + "it cost " + cost)
     elif isStaff == 1:
@@ -41,6 +41,6 @@ class payWeb():
     def runWeb(self):
          return open(str(os.getcwd()).partition('School_Parking')[0]+'School_Parking\\Website\\paymentSystem.HTML').read().replace("insertCostHere",self.cost) 
 
-    def userPaying(self,csv,creditCardNumber, expiryDate, cardHolderName,house, city, postcode):
+    def userPaying(self, csv, creditCardNumber, expiryDate, cardHolderName, house, city, postcode):
         pass
         #bank transaction happpens
