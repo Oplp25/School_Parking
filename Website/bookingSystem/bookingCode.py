@@ -1,14 +1,15 @@
 import cherrypy,os,sys,datetime
 sys.path.insert(0,str(os.getcwd()).partition('School_Parking')[0]+'School_Parking\\Database\\databaseCode')
 import usersDatabase,spacesDatabase
+sys.path.insert(0,str(os.getcwd()).partition('School_Parking')[0]+'School_Parking\\AdminFunctions')
+import payment
 sys.path.insert(0,str(os.getcwd()).partition('School_Parking')[0]+'School_Parking\\Website\\bookingSystem')
 print(os.getcwd())
 class BookingWebpage(object):
     def __init__(self,booker):
         self.booker=booker
         self.newDB=usersDatabase.DB()
-        self.isStaff=usersDatabase.DB.checkIsStaff(self.newDB,booker)
-        print(self.isStaff)
+        self.isStaff=self.newDB.checkIsStaff(self.booker)
         if self.isStaff==1:
             self.isStaff=True
         else:
@@ -39,7 +40,7 @@ class BookingWebpage(object):
 
     #Logic Functions
     @cherrypy.expose
-    def staffPassBooking(self,length, employment=''):
+    def staffPassBooking(self,length, WD=''):
         self.newDB.editValue(self.booker,'datePassStarted',datetime.date.today())
         if length=='Half Term':
             self.newDB.editValue(self.booker,'datePassEnds',getHalfTermEndDate())
@@ -48,10 +49,10 @@ class BookingWebpage(object):
         elif length=='Year':
             self.newDB.editValue(self.booker,'datePassEnds',getYearEndDate())
         
-        if employment=='Part-Time':
+        if int(length)<5:
             self.newDB.editValue(self.booker,'isPartTime',1)
         
-        self.getCost(length,employment)
+        self.getCost(length,WD)
     @cherrypy.expose
     def studentPassBooking(self,length):
         self.newDB.editValue(self.booker,'datePassStarted',datetime.date.today())
@@ -69,6 +70,10 @@ class BookingWebpage(object):
         newD.bookSpace(lot,bool(disabled))
         self.newDB.editValue(self.booker,'hasSpace',True)
         self.newDB.editValue(self.booker,'spaceLoc',lot)
+        
+        
+    def getCost(self,length,employment=5):
+        self.cost=payment.costMaker(self.booker,length,employment)
 def getHalfTermEndDate():
     return datetime.date.today()
 def getTermEndDate():
@@ -76,4 +81,4 @@ def getTermEndDate():
 def getYearEndDate():
     return datetime.date.today()
 if __name__=='__main__':
-    cherrypy.quickstart(BookingWebpage(1))
+    cherrypy.quickstart(BookingWebpage(2))
