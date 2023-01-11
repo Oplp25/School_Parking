@@ -33,4 +33,3 @@ class MainWebsite(object):
         
 if __name__ == '__main__':
     cherrypy.quickstart(MainWebsite())
-    #signUp.registerUser(None, "Alfred Sorrell", 1, "19SorrellA94", "Qpmz1234", "Qpmz1234", "19SorrellA94@redborne.com")

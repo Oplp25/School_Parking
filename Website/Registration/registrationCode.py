@@ -21,7 +21,7 @@ class RegistrationWebpage(object):
             return open(path[0]+path[1]+r"\Website\Registration\clientRegistrationUFail.html")
         else:
             if not(name == " " or user == " " or passw == " " or conpassw == " "):
-                lDB.insertNewUser(user, passw, 1)
+                lDB.insertNewUser(user, passw, 0)
                 uDB.addUser(name, email, 0, isStaff, 0)
             return open(path[0]+path[1]+r"\Website\Registration\clientRegistration.html")
 
