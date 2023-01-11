@@ -7,9 +7,12 @@ sys.path.insert(0, path[0]+path[1]+r"\Website\LogIn")
 import LogInCode as lI
 sys.path.insert(0, path[0]+path[1]+r"\Website\Registration")
 import registrationCode as sU
+sys.path.insert(0, path[0]+path[1]+r"\Website\bookingSystem")
+import bookingCode as bC
 
-logWeb = lI.LoginWebpage
-signUp = sU.RegistrationWebpage
+logWeb = lI.LoginWebpage()
+signUp = sU.RegistrationWebpage()
+book = bC.BookingWebpage()
 
 class MainWebsite(object):
     @cherrypy.expose
@@ -30,6 +33,9 @@ class MainWebsite(object):
     @cherrypy.expose
     def infraction(self):
         return open(path[0]+path[1]+r"\Website\LogIn\Preloginmain.html")
+    @cherrypy.expose
+    def booking(self):
+        return bC.index()
         
 if __name__ == '__main__':
     cherrypy.quickstart(MainWebsite())
