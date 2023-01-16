@@ -5,8 +5,7 @@ def infractions(infrac, userID):
     fine1 = 20
     fine2 = 35
     fine3 = 50
-    fine4 = 100
-    fine5 = infrac ^ 2 * 4
+    fine4 = 70
     time1 = "30 School days from."
     time2 = "65 School days from."
     if infrac == 1:
@@ -20,4 +19,4 @@ def infractions(infrac, userID):
     elif infrac == 5:
         return "They should be charged"+fine4 + "and permanenlty banned from parking here."
     elif infrac > 5:
-        return "They should be charged " + fine5
+        return "They should be charged " + fine4
