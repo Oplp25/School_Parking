@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <head>
+    <meta charset="UTF-8">
     <title>Payment</title>
     <style>
         form{text-align:center;font-size:50px;vertical-align: center;}
@@ -11,28 +12,28 @@
 <body>
     <h1>Insert you credit card details here</h1>
     <br><br><br><br><br>
-    <form action = userPaying>
-        <p>You owe us £insertCostHere</p>
-        <input type="text" id = "creditCardNumber" class="creditCardNumber" value="creditCardNumber">
+    <form>
+        <p>You owe us &pound;insertCostHere</p><br>
         <label for="creditCardNumber">Please enter your credit card number</label><br>
-
-        <input type="text" id = "csv" class="csv" value="csv">
+        <input type="text" id = "creditCardNumber" class="creditCardNumber" ><br>
+        
         <label for="csv">Please enter your csv</label><br>
-
-        <input type="text" id = "expiryDate" class="expiryDate" value="expiryDate">
+        <input type="text" id = "csv" class="csv"><br>
+        
         <label for="expiryDate">Please enter your expiry date</label><br>
-
-        <input type="text" id = "cardHolderName" class="cardHolderName" value="cardHolderName">
+        <input type="text" id = "expiryDate" class="expiryDate"><br>
+        
         <label for="cardHolderName">Please enter your full name, as is listed on your card</label><br>
-
-        <input type="text" id = "house" class="house" value="house">
+        <input type="text" id = "cardHolderName" class="cardHolderName"><br>
+        
         <label for="house">Please enter your house number and street name</label><br>
+        <input type="text" id = "house" class="house"><br>
 
-        <input type="text" id = "city" class="city" value="city">
         <label for="city">Please enter your city name</label><br>
-
-        <input type="text" id = "postcode" class="postcode" value="postcode">
+        <input type="text" id = "city" class="city"><br>
+        
         <label for="postcode">Please enter your postcode</label><br>
+        <input type="text" id = "postcode" class="postcode"><br>
 
         <input class='submit' type="submit" value="Submit">
       </form>

@@ -87,5 +87,3 @@ def getTermEndDate():
     return datetime.date.today()
 def getYearEndDate():
     return datetime.date.today()
-if __name__=='__main__':
-    cherrypy.quickstart(BookingWebpage(1))
