@@ -6,16 +6,20 @@ import payment
 sys.path.insert(0,str(os.getcwd()).partition('School_Parking')[0]+'School_Parking\\Website\\bookingSystem')
 print(os.getcwd())
 class BookingWebpage(object):
+    def __init__(self):
+        self.booker = ""
+        self.newDB=usersDatabase.DB()
+        self.isStaff = 0
+
     def start(self,booker):
         self.booker=booker
-        self.newDB=usersDatabase.DB()
         self.isStaff=self.newDB.checkIsStaff(self.booker)
         if self.isStaff==1:
             self.isStaff=True
         else:
             self.isStaff=False
     @cherrypy.expose
-    def index(self, rqUserID):
+    def index(self, rqUserID):  
         self.start(rqUserID)
         return open(str(os.getcwd()).partition('School_Parking')[0]+'School_Parking\\Website\\bookingSystem\\passOrSpaceHTML.html')
     @cherrypy.expose
