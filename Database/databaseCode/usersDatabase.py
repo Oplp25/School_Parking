@@ -70,3 +70,4 @@ class DB:
         bool2=bool1.fetchall()
         self.close()
         return bool2[0][0]
+db=DB()

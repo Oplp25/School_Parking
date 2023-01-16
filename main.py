@@ -18,8 +18,6 @@ book = bC.BookingWebpage()
 login = lDb.LoginDB()
 
 class MainWebsite(object):
-    def __init__(self):
-        self.current_user = ""
     @cherrypy.expose
     def index(self):
         return open(path[0]+path[1]+r"\Website\LogIn\Preloginmain.html")
@@ -28,7 +26,7 @@ class MainWebsite(object):
         return logWeb.index()
     @cherrypy.expose
     def LogIN(self, user, passw):
-        self.current_user = login.FetchID(user)
+        cherrypy.response.cookie["current_user"] = login.FetchID(user)
         return logWeb.LogIN(user, passw)
     @cherrypy.expose
     def register(self):
@@ -41,13 +39,16 @@ class MainWebsite(object):
         return open(path[0]+path[1]+r"\Website\LogIn\Preloginmain.html")
     @cherrypy.expose
     def booking(self):
-        return book.index(self.current_user[0])
+        return book.index(str(cherrypy.request.cookie["current_user"])[27:].partition("\\")[0])
     @cherrypy.expose
     def choosePassOrSpace(self,choice=''):
         return book.choosePassOrSpace(choice)
     @cherrypy.expose
     def spaceBooking(self,lot, disabled):
         return book.spaceBooking(lot, disabled)
+    @cherrypy.expose
+    def studentPassBooking(self,length):
+        return book.studentPassBooking(length)
         
 if __name__ == '__main__':
     cherrypy.quickstart(MainWebsite())

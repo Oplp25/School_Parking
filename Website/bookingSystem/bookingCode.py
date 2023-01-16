@@ -47,27 +47,27 @@ class BookingWebpage(object):
     @cherrypy.expose
     def staffPassBooking(self,length, WD=5):
         WD=int(WD)
-        self.newDB.editValue(self.booker,'datePassStarted',datetime.date.today())
+        self.newDB.editValue(str(cherrypy.request.cookie["current_user"])[27:].partition("\\")[0],'datePassStarted',datetime.date.today())
         if length=='Half Term':
-            self.newDB.editValue(self.booker,'datePassEnds',getHalfTermEndDate())
+            self.newDB.editValue(str(cherrypy.request.cookie["current_user"])[27:].partition("\\")[0],'datePassEnds',getHalfTermEndDate())
         elif length=='Term':
-            self.newDB.editValue(self.booker,'datePassEnds',getTermEndDate())
+            self.newDB.editValue(str(cherrypy.request.cookie["current_user"])[27:].partition("\\")[0],'datePassEnds',getTermEndDate())
         elif length=='Year':
-            self.newDB.editValue(self.booker,'datePassEnds',getYearEndDate())
+            self.newDB.editValue(str(cherrypy.request.cookie["current_user"])[27:].partition("\\")[0],'datePassEnds',getYearEndDate())
         
         if WD<5:
-            self.newDB.editValue(self.booker,'isPartTime',1)
+            self.newDB.editValue(str(cherrypy.request.cookie["current_user"])[27:].partition("\\")[0],'isPartTime',1)
         
         return self.pay(length,WD)
     @cherrypy.expose
     def studentPassBooking(self,length):
-        self.newDB.editValue(self.booker,'datePassStarted',datetime.date.today())
+        self.newDB.editValue(str(cherrypy.request.cookie["current_user"])[27:].partition("\\")[0],'datePassStarted',datetime.date.today())
         if length=='Half Term':
-            self.newDB.editValue(self.booker,'datePassEnds',getHalfTermEndDate())
+            self.newDB.editValue(str(cherrypy.request.cookie["current_user"])[27:].partition("\\")[0],'datePassEnds',getHalfTermEndDate())
         elif length=='Term':
-            self.newDB.editValue(self.booker,'datePassEnds',getTermEndDate())
+            self.newDB.editValue(str(cherrypy.request.cookie["current_user"])[27:].partition("\\")[0],'datePassEnds',getTermEndDate())
         elif length=='Year':
-            self.newDB.editValue(self.booker,'datePassEnds',getYearEndDate())
+            self.newDB.editValue(str(cherrypy.request.cookie["current_user"])[27:].partition("\\")[0],'datePassEnds',getYearEndDate())
 
         self.pay(length)
     @cherrypy.expose
@@ -82,10 +82,10 @@ class BookingWebpage(object):
         self._paymentOb=payment.payWeb(self.booker,length,employment)
         return self._paymentOb.runWeb()
 def getHalfTermEndDate():
-    return datetime.date.today()
+    return str(datetime.date.today())
 def getTermEndDate():
-    return datetime.date.today()
+    return str(datetime.date.today())
 def getYearEndDate():
-    return datetime.date.today()
+    return str(datetime.date.today())
 if __name__=='__main__':
     cherrypy.quickstart(BookingWebpage(1))
