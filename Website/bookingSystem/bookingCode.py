@@ -6,7 +6,7 @@ import payment
 sys.path.insert(0,str(os.getcwd()).partition('School_Parking')[0]+'School_Parking\\Website\\bookingSystem')
 print(os.getcwd())
 class BookingWebpage(object):
-    def __init__(self,booker):
+    def start(self,booker):
         self.booker=booker
         self.newDB=usersDatabase.DB()
         self.isStaff=self.newDB.checkIsStaff(self.booker)
@@ -15,7 +15,8 @@ class BookingWebpage(object):
         else:
             self.isStaff=False
     @cherrypy.expose
-    def index(self):
+    def index(self, rqUserID):
+        self.start(rqUserID)
         return open(str(os.getcwd()).partition('School_Parking')[0]+'School_Parking\\Website\\bookingSystem\\passOrSpaceHTML.html')
     @cherrypy.expose
     def choosePassOrSpace(self,choice=''):
@@ -80,5 +81,6 @@ def getTermEndDate():
     return datetime.date.today()
 def getYearEndDate():
     return datetime.date.today()
+
 if __name__=='__main__':
-    cherrypy.quickstart(BookingWebpage(2))
+    cherrypy.quickstart(BookingWebpage())

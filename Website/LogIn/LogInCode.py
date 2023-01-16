@@ -19,7 +19,7 @@ class LoginWebpage(object):
     def LogIN(self, user, passw):
         if lDB.logIn(user, passw):
             if lDB.checkAdministrator(user)[0] == 0:
-                if uDB.checkIsStaff(lDB.FetchID(user)[0])[0][0] == 1:
+                if uDB.checkIsStaff(lDB.FetchID(user)[0]) == 1:
                     return open(path[0]+path[1]+r"\Website\teacherclientmain.html").read().replace("--USERNAME--", uDB.selectUser(lDB.FetchID(user)[0])[1])
                 else:
                     return open(path[0]+path[1]+r"\Website\studentclientmain.html").read().replace("--USERNAME--", uDB.selectUser(lDB.FetchID(user)[0])[1])
