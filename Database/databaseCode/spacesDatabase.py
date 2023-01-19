@@ -1,9 +1,13 @@
 import sqlite3,os
 
+#class to create and interact with the spaces database.
+#
+#This database exists so that we can track the number of assignable spaces left in each car park, and assign new spaces a car park that they are in
 class SpacesLog():
     def __init__(self):
         self.databasePath=os.getcwd().partition('School_Parking')[0]+'School_Parking\\Database\\Databases\\ParkingLog.db'
     
+    #cretaes the database
     def createDatabase(self):
             connection = sqlite3.connect(self.databasePath)
 
