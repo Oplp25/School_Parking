@@ -1,27 +1,36 @@
 import cherrypy,os,sys,datetime
+#reroute the path so that we can import functions and classes from files in other folders
 sys.path.insert(0,str(os.getcwd()).partition('School_Parking')[0]+'School_Parking\\Database\\databaseCode')
 import usersDatabase,spacesDatabase
+#reroute the path so that we can import functions and classes from files in other folders
 sys.path.insert(0,str(os.getcwd()).partition('School_Parking')[0]+'School_Parking\\AdminFunctions')
 import payment
+#reroute the path back to this file's path
 sys.path.insert(0,str(os.getcwd()).partition('School_Parking')[0]+'School_Parking\\Website\\bookingSystem')
-print(os.getcwd())
+
+#Class to manage booking a new pass or space
 class BookingWebpage(object):
     def __init__(self):
         self.booker = ""
         self.newDB=usersDatabase.DB()
         self.isStaff = 0
 
+    #start the process of booking
     def start(self,booker):
+        #get the userID of the booker
         self.booker=booker
         self.isStaff=self.newDB.checkIsStaff(self.booker)
         if self.isStaff==1:
             self.isStaff=True
         else:
             self.isStaff=False
+    
+    #First webpage to run, it is a form that asks whether the user wants to bok a pass or a space, and sends the choice to choosePassOrSpace
     @cherrypy.expose
     def index(self, rqUserID):  
         self.start(rqUserID)
         return open(str(os.getcwd()).partition('School_Parking')[0]+'School_Parking\\Website\\bookingSystem\\passOrSpaceHTML.html')
+    
     @cherrypy.expose
     def choosePassOrSpace(self,choice=''):
         if choice=='pass':
