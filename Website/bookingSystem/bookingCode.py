@@ -31,6 +31,7 @@ class BookingWebpage(object):
         self.start(rqUserID)
         return open(str(os.getcwd()).partition('School_Parking')[0]+'School_Parking\\Website\\bookingSystem\\passOrSpaceHTML.html')
     
+    #runs the correct webpage based on the user's inputs
     @cherrypy.expose
     def choosePassOrSpace(self,choice=''):
         if choice=='pass':
@@ -53,6 +54,8 @@ class BookingWebpage(object):
         return open(str(os.getcwd()).partition('School_Parking')[0]+'School_Parking\\Website\\bookingSystem\\spaceBooking.html')
 
     #Logic Functions
+
+    #uses the cookies from the website to get the userID of the current user, then edits the dates in the database
     @cherrypy.expose
     def staffPassBooking(self,length, WD=5):
         WD=int(WD)
@@ -67,7 +70,10 @@ class BookingWebpage(object):
         if WD<5:
             self.newDB.editValue(str(cherrypy.request.cookie["current_user"])[27:].partition("\\")[0],'isPartTime',1)
         
+        #sends the user to the payment screen
         return self.pay(length,WD)
+    
+    #uses the cookies from the website to get the userID of the current user, then edits the dates in the database
     @cherrypy.expose
     def studentPassBooking(self,length):
         self.newDB.editValue(str(cherrypy.request.cookie["current_user"])[27:].partition("\\")[0],'datePassStarted',datetime.date.today())
@@ -77,19 +83,24 @@ class BookingWebpage(object):
             self.newDB.editValue(str(cherrypy.request.cookie["current_user"])[27:].partition("\\")[0],'datePassEnds',getTermEndDate())
         elif length=='Year':
             self.newDB.editValue(str(cherrypy.request.cookie["current_user"])[27:].partition("\\")[0],'datePassEnds',getYearEndDate())
-
-        self.pay(length)
+        #sends the user to the payment screen
+        return self.pay(length)
+    
+    #book the space in the spaces database, then record it in the user database
     @cherrypy.expose
     def spaceBooking(self,lot, disabled):
         newD=spacesDatabase.SpacesLog()
         newD.bookSpace(lot,bool(disabled))
         self.newDB.editValue(self.booker,'hasSpace',True)
         self.newDB.editValue(self.booker,'spaceLoc',lot)
-        
+    
+    #runs the payment webpage
     @cherrypy.expose
     def pay(self,length,employment=5):
         self._paymentOb=payment.payWeb(self.booker,length,employment)
         return self._paymentOb.runWeb()
+
+#these would access aschool database that we don't have
 def getHalfTermEndDate():
     return str(datetime.date.today())
 def getTermEndDate():
